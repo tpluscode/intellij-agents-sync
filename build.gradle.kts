@@ -1,12 +1,11 @@
 plugins {
     id("java")
     kotlin("jvm") version "2.0.21"
-    id("org.jetbrains.intellij.platform") version "2.2.1"
-    id("org.jetbrains.changelog") version "2.2.1"
+    id("org.jetbrains.intellij.platform") version "2.20.1"
 }
 
-group = providers.gradleProperty("pluginGroup").get()
-version = providers.gradleProperty("pluginVersion").get()
+group = "com.github.tpluscode.agentssync"
+version = providers.gradleProperty("pluginVersion").getOrElse("0.0.0")
 
 repositories {
     mavenCentral()
@@ -17,8 +16,8 @@ repositories {
 
 dependencies {
     intellijPlatform {
-        create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
-        bundledPlugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
+        create("IC", "2024.2.4")
+        bundledPlugin("org.intellij.plugins.markdown")
         pluginVerifier()
         zipSigner()
     }
@@ -32,28 +31,15 @@ kotlin {
     jvmToolchain(21)
 }
 
-changelog {
-    version.set(providers.gradleProperty("pluginVersion"))
-    path.set(file("CHANGELOG.md").canonicalPath)
-    header.set(provider { "[${version.get()}] - ${java.time.LocalDate.now()}" })
-    itemPrefix.set("-")
-    keepUnreleased.set(false)
-    groups.set(emptyList())
-}
-
 intellijPlatform {
     pluginConfiguration {
         id = "com.github.tpluscode.agentssync"
-        name = providers.gradleProperty("pluginName")
-        version = providers.gradleProperty("pluginVersion")
+        name = "Agents Sync"
+        version = providers.gradleProperty("pluginVersion").getOrElse("0.0.0")
         description = """
             Synchronize, edit, and manage a system-wide AGENTS.md file across projects and machines using JetBrains Settings Sync.
             Includes a full Markdown editor tab, history snapshot tracking with rollback support, and an embedded MCP (Model Context Protocol) tool interface for JetBrains AI Assistant, Junie, AIR, and Claude.
         """.trimIndent()
-        changeNotes = changelog.renderItem(
-            changelog.getOrEmpty(providers.gradleProperty("pluginVersion")),
-            org.jetbrains.changelog.Changelog.OutputType.HTML
-        )
         vendor {
             name = "Tomasz Pluskiewicz"
             url = "https://github.com/tpluscode"
@@ -72,18 +58,15 @@ intellijPlatform {
 
     publishing {
         token = providers.environmentVariable("PUBLISH_TOKEN")
-        // channels = listOf(providers.gradleProperty("pluginVersion").map { if (it.contains('-')) "eap" else "default" }.get())
     }
 
     pluginVerification {
         ides {
-            ide("IC-2024.2.4")
+            recommended()
         }
     }
 }
 
-tasks {
-    test {
-        useJUnitPlatform()
-    }
+tasks.test {
+    useJUnitPlatform()
 }
