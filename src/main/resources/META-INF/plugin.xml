@@ -1,0 +1,71 @@
+<idea-plugin>
+    <id>com.github.tpluscode.agentssync</id>
+    <name>Agents Sync</name>
+    <vendor email="tomasz@pluskiewicz.pl" url="https://github.com/tpluscode">Tomasz Pluskiewicz</vendor>
+
+    <description><![CDATA[
+    <h3>Agents Sync — Global AGENTS.md Editor & Cross-Machine Synchronization</h3>
+    <p>
+      Seamlessly manage, edit, and synchronize a system-wide <code>AGENTS.md</code> guidelines file
+      across all your projects, IDE instances, and machines using JetBrains Settings Sync (Backup &amp; Sync).
+    </p>
+
+    <h4>Features:</h4>
+    <ul>
+      <li><b>Cross-Machine Synchronization:</b> Syncs <code>AGENTS.md</code> and all settings across multiple machines automatically via JetBrains Account cloud sync.</li>
+      <li><b>Full-Blown Markdown Editor Tab:</b> Open and edit your global <code>AGENTS.md</code> in a full IDE editor tab with live preview, syntax highlighting, and outline.</li>
+      <li><b>Snapshot Revision History:</b> Automatic timestamped history snapshots on every change with one-click rollback and full history cloud synchronization.</li>
+      <li><b>AI Assistant &amp; AIR Integration:</b> Built-in Model Context Protocol (MCP) server allowing JetBrains AI Assistant, Junie, AIR, and Claude to read, update, and append guidelines.</li>
+      <li><b>Local File Mirroring:</b> Automatically mirrors instructions to <code>~/.junie/AGENTS.md</code> (or custom path) so CLI agents and external tools stay in sync.</li>
+      <li><b>Editor Context Actions:</b> Right-click any code snippet in your editor to immediately promote it to a global agent guideline rule.</li>
+    </ul>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Application Services -->
+        <applicationService serviceImplementation="com.github.tpluscode.agentssync.service.AgentSyncSettingsService"/>
+        <applicationService serviceImplementation="com.github.tpluscode.agentssync.service.AgentFileManager"/>
+        <applicationService serviceImplementation="com.github.tpluscode.agentssync.mcp.AgentMcpServerService"/>
+
+        <!-- Settings Configurable -->
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.github.tpluscode.agentssync.settings.AgentSyncConfigurable"
+                id="com.github.tpluscode.agentssync.settings.AgentSyncConfigurable"
+                displayName="Agents Sync (AGENTS.md)"/>
+
+        <!-- Startup Activity -->
+        <postStartupActivity implementation="com.github.tpluscode.agentssync.AgentSyncStartupActivity"/>
+
+        <!-- Document Save Listener -->
+        <fileDocumentManagerListener implementation="com.github.tpluscode.agentssync.editor.AgentFileDocumentListener"/>
+    </extensions>
+
+    <actions>
+        <group id="AgentsSync.ActionGroup" text="Agents Sync" popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+
+            <action id="AgentsSync.OpenEditor"
+                    class="com.github.tpluscode.agentssync.actions.OpenAgentEditorAction"
+                    text="Open Global AGENTS.md Editor"
+                    description="Open the synchronized system AGENTS.md in a full Markdown editor tab">
+                <keyboard-shortcut keymap="$default" first-keystroke="shift alt A"/>
+            </action>
+
+            <action id="AgentsSync.ForceSync"
+                    class="com.github.tpluscode.agentssync.actions.ForceSyncAgentsAction"
+                    text="Sync Global AGENTS.md"
+                    description="Manually synchronize system AGENTS.md with disk and cloud settings"/>
+        </group>
+
+        <!-- Right-Click Context Menu in Code Editor -->
+        <action id="AgentsSync.AddSelection"
+                class="com.github.tpluscode.agentssync.actions.AddSelectionToAgentsAction"
+                text="Add Selection to Global AGENTS.md"
+                description="Append the selected code snippet or guideline to the synchronized AGENTS.md">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>

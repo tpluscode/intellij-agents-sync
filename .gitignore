@@ -1,0 +1,16 @@
+*.class
+*.log
+
+# Gradle files
+.gradle/
+build/
+.intellijPlatform/
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.ipr
+out/
+
+# macOS
+.DS_Store
