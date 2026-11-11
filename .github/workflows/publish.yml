@@ -1,8 +1,18 @@
 name: Publish Plugin to JetBrains Marketplace
 
 on:
-  release:
-    types: [ published ]
+  workflow_call:
+    inputs:
+      ref:
+        description: 'Git ref to checkout'
+        required: false
+        type: string
+        default: ''
+      channel:
+        description: 'Target Marketplace Channel (default or eap)'
+        required: false
+        type: string
+        default: 'default'
   workflow_dispatch:
     inputs:
       channel:
@@ -19,6 +29,8 @@ jobs:
     steps:
       - name: Fetch Sources
         uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref || github.ref }}
 
       - name: Setup Java
         uses: actions/setup-java@v6

@@ -1,0 +1,24 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "simple",
+      "package-name": "intellij-agents-sync",
+      "initial-version": "1.0.0",
+      "extra-files": [
+        {
+          "type": "properties",
+          "path": "gradle.properties",
+          "key": "pluginVersion"
+        }
+      ],
+      "changelog-sections": [
+        {"type": "feat", "section": "Features", "hidden": false},
+        {"type": "fix", "section": "Bug Fixes", "hidden": false},
+        {"type": "perf", "section": "Performance Improvements", "hidden": false},
+        {"type": "revert", "section": "Reverts", "hidden": false},
+        {"type": "docs", "section": "Documentation", "hidden": false},
+        {"type": "chore", "section": "Miscellaneous", "hidden": true}
+      ]
+    }
+  }
+}

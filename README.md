@@ -129,12 +129,28 @@ The repository includes pre-configured GitHub Actions workflows in `.github/work
    - Executes tests, runs IntelliJ Plugin Verifier, and validates distribution packaging.
 
 2. **`publish.yml` (CD):**
-   - Automatically publishes the plugin to the JetBrains Marketplace upon creating a GitHub Release.
-   - Configure the following repository secrets in **GitHub -> Settings -> Secrets and variables -> Actions**:
+   - Reusable workflow that verifies, signs, and publishes the plugin to JetBrains Marketplace.
+   - Can be triggered manually via `workflow_dispatch` (e.g. for EAP releases) or automatically called by `release-please.yml`.
+   - Requires repository secrets configured in **GitHub -> Settings -> Secrets and variables -> Actions**:
      - `PUBLISH_TOKEN`: JetBrains Marketplace upload token.
      - `CERTIFICATE_CHAIN`: (Optional) Plugin signing certificate chain.
      - `PRIVATE_KEY`: (Optional) Plugin signing private key.
      - `PRIVATE_KEY_PASSWORD`: (Optional) Private key password.
+
+3. **`release-please.yml` (Release Orchestration):**
+   - Maintains automated Release PRs based on Conventional Commits.
+   - On Release PR merge, automatically creates the GitHub Release tag and invokes `publish.yml` to deploy the artifact to JetBrains Marketplace.
+
+## Automated Releases & Release Please
+
+This repository uses **Google Release Please** (`release-please-action`) alongside the **JetBrains Changelog Plugin** (`org.jetbrains.changelog`) for automated Semantic Versioning and Marketplace releases:
+
+1. **Conventional Commits:** Contributors write commits using conventional prefixes:
+   - `fix: ...` -> triggers automated **patch** bump (e.g. `1.0.1`)
+   - `feat: ...` -> triggers automated **minor** bump (e.g. `1.1.0`)
+   - `feat!: ...` or `BREAKING CHANGE:` -> triggers automated **major** bump (e.g. `2.0.0`)
+2. **Automated Release PR:** On pushes to `main`, Release Please automatically maintains an open Release PR that bumps `pluginVersion` in `gradle.properties` and updates `CHANGELOG.md`.
+3. **Automated Deployment:** Merging the Release PR automatically tags the repository, creates a GitHub Release, and publishes the verified plugin directly to the JetBrains Marketplace.
 
 ---
 
