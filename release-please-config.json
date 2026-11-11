@@ -5,11 +5,7 @@
       "package-name": "intellij-agents-sync",
       "initial-version": "1.0.0",
       "extra-files": [
-        {
-          "type": "properties",
-          "path": "gradle.properties",
-          "key": "pluginVersion"
-        }
+        "gradle.properties"
       ],
       "changelog-sections": [
         {"type": "feat", "section": "Features", "hidden": false},
