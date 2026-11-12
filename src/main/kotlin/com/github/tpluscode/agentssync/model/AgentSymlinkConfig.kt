@@ -21,6 +21,13 @@ data class AgentSymlinkConfig(
                     description = "Default instructions for Junie and JetBrains AI agents"
                 ),
                 AgentSymlinkConfig(
+                    id = "codex",
+                    name = "OpenAI Codex",
+                    targetPath = "~/.codex/AGENTS.md",
+                    enabled = true,
+                    description = "Global instructions for OpenAI Codex"
+                ),
+                AgentSymlinkConfig(
                     id = "claude",
                     name = "Claude Code",
                     targetPath = "~/.claude/CLAUDE.md",

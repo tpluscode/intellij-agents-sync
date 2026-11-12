@@ -31,6 +31,7 @@ class AgentSyncStateTest {
         val defaults = AgentSymlinkConfig.createDefaults()
         val ids = defaults.map { it.id }
         assertTrue(ids.contains("junie"))
+        assertTrue(ids.contains("codex"))
         assertTrue(ids.contains("claude"))
         assertTrue(ids.contains("cursor"))
         assertTrue(ids.contains("windsurf"))

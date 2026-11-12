@@ -77,6 +77,7 @@ Agents Sync automatically creates and maintains symlinks pointing from native ag
 | Agent / Tool | Default Location | Description |
 |---|---|---|
 | **Junie / JetBrains** | `~/.junie/AGENTS.md` | Primary guidelines for JetBrains AI agents |
+| **OpenAI Codex** | `~/.codex/AGENTS.md` | Global instructions for OpenAI Codex |
 | **Claude Code** | `~/.claude/CLAUDE.md` | Global prompt instructions for Claude CLI |
 | **Cursor** | `~/.cursorrules` | Global rule set for Cursor editor |
 | **Windsurf / Codeium** | `~/.windsurfrules` | Global system rules for Windsurf IDE |
@@ -88,6 +89,8 @@ Agents Sync automatically creates and maintains symlinks pointing from native ag
 | **XDG Config** | `~/.config/AGENTS.md` | XDG standard configuration directory |
 
 You can add custom symlink paths, toggle individual agents, or trigger an immediate refresh in **Settings** -> **Tools** -> **Agents Sync (AGENTS.md)** -> **Agent Symlinks**.
+
+For existing installations, use **Reset Defaults** in **Agent Symlinks** to include newly supported agents, or add the Codex path manually to preserve your custom list. Codex uses `~/.codex/AGENTS.md` by default; if you set a custom `CODEX_HOME`, adjust the symlink path to match. See the [official Codex instructions documentation](https://learn.chatgpt.com/docs/agent-configuration/agents-md).
 
 ---
 
