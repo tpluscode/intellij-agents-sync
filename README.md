@@ -2,6 +2,8 @@
 
 ![Plugin Icon](src/main/resources/META-INF/pluginIcon.svg)
 
+<iframe width="245px" height="48px" src="https://plugins.jetbrains.com/embeddable/install/36037"></iframe>
+
 **Agents Sync** is an IntelliJ Platform plugin designed to create, edit, manage, and synchronize a system-wide `AGENTS.md` guidelines file across all projects, IDE instances, and workstations using your **JetBrains Account Backup & Sync (Settings Sync)**.
 
 It provides a rich Markdown editor tab in IntelliJ, automatic version history snapshots with rollback capabilities, local file mirroring (e.g. `~/.junie/AGENTS.md`), and an embedded **Model Context Protocol (MCP)** server so **JetBrains AI Assistant**, **Junie**, **AIR**, and **Claude** can read and update your global agent rules directly.
