@@ -2,7 +2,7 @@
 
 ![Plugin Icon](src/main/resources/META-INF/pluginIcon.svg)
 
-<iframe width="245px" height="48px" src="https://plugins.jetbrains.com/embeddable/install/36037"></iframe>
+[![Get from Marketplace](docs/assets/marketplace-badge.svg)](https://plugins.jetbrains.com/plugin/36037-agents-sync)
 
 **Agents Sync** is an IntelliJ Platform plugin designed to create, edit, manage, and synchronize a system-wide `AGENTS.md` guidelines file across all projects, IDE instances, and workstations using your **JetBrains Account Backup & Sync (Settings Sync)**.
 
